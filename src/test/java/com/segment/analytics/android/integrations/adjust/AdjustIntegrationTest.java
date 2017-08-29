@@ -176,6 +176,39 @@ public class AdjustIntegrationTest {
 
   }
 
+  @Test public void trackWithUserId() throws Exception {
+    AdjustEvent event = mock(AdjustEvent.class);
+    PowerMockito.whenNew(AdjustEvent.class).withArguments("bar").thenReturn(event);
+
+    Traits traits = createTraits() //
+        .putValue("userId", "5678");
+
+    integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
+    integration.track(new TrackPayloadBuilder()
+        .event("foo")
+        .build());
+    verify(adjustInstance).trackEvent(event);
+    verify(adjustInstance).addSessionPartnerParameter("userId", "5678");
+
+  }
+
+  @Test public void trackWithBoth() throws Exception {
+    AdjustEvent event = mock(AdjustEvent.class);
+    PowerMockito.whenNew(AdjustEvent.class).withArguments("bar").thenReturn(event);
+
+    Traits traits = createTraits() //
+        .putValue("anonymousId", "1234") //
+        .putValue("userId", "5678");
+
+    integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
+    integration.track(new TrackPayloadBuilder()
+        .event("foo")
+        .build());
+    verify(adjustInstance).trackEvent(event);
+    verify(adjustInstance).addSessionPartnerParameter("userId", "5678");
+    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "1234");
+  }
+
   @Test public void trackWithoutMatchingCustomEventDoesNothing() throws Exception {
     integration.track(new TrackPayloadBuilder().event("bar").build());
     verify(adjustInstance, never()).trackEvent(any(AdjustEvent.class));
