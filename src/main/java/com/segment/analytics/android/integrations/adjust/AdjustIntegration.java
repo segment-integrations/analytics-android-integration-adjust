@@ -113,6 +113,18 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
   @Override public void track(TrackPayload track) {
     super.track(track);
 
+    String userId = track.userId();
+    if (userId != null) {
+      adjust.addSessionPartnerParameter("userId", userId);
+      logger.verbose("adjust.addSessionPartnerParameter(userId, (%s))", userId);
+    }
+
+    String anonymousId = track.anonymousId();
+    if (anonymousId != null) {
+      adjust.addSessionPartnerParameter("anonymousId", anonymousId);
+      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, (%s))", anonymousId);
+    }
+
     String token = customEvents.getString(track.event());
     if (isNullOrEmpty(token)) {
       return;
@@ -128,7 +140,6 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
     if (revenue != 0 && !isNullOrEmpty(currency)) {
       event.setRevenue(revenue, currency);
     }
-
     logger.verbose("Adjust.getDefaultInstance().trackEvent(%s);", event);
     adjust.trackEvent(event);
   }
