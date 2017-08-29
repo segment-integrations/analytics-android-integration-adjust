@@ -92,15 +92,15 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
     super.identify(identify);
 
     String userId = identify.userId();
-    if (userId != null) {
+    if (!isNullOrEmpty(userId)) {
       adjust.addSessionPartnerParameter("userId", userId);
-      logger.verbose("adjust.addSessionPartnerParameter(userId, (%s))", userId);
+      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
     }
 
     String anonymousId = identify.anonymousId();
-    if (anonymousId != null) {
+    if (!isNullOrEmpty(anonymousId)) {
       adjust.addSessionPartnerParameter("anonymousId", anonymousId);
-      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, (%s))", anonymousId);
+      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
     }
   }
 
@@ -114,15 +114,15 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
     super.track(track);
 
     String userId = track.userId();
-    if (userId != null) {
+    if (!isNullOrEmpty(userId)) {
       adjust.addSessionPartnerParameter("userId", userId);
-      logger.verbose("adjust.addSessionPartnerParameter(userId, (%s))", userId);
+      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
     }
 
     String anonymousId = track.anonymousId();
-    if (anonymousId != null) {
+    if (!isNullOrEmpty(anonymousId)) {
       adjust.addSessionPartnerParameter("anonymousId", anonymousId);
-      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, (%s))", anonymousId);
+      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
     }
 
     String token = customEvents.getString(track.event());
