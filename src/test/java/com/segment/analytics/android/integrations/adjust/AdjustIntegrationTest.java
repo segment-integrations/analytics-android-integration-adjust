@@ -165,14 +165,15 @@ public class AdjustIntegrationTest {
     PowerMockito.whenNew(AdjustEvent.class).withArguments("bar").thenReturn(event);
 
     Traits traits = createTraits() //
-        .putValue("anonymousId", "1234");
+        .putValue("anonymousId", "123");
 
-    integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
     integration.track(new TrackPayloadBuilder()
         .event("foo")
+        .traits(traits)
         .build());
+
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "1234");
+    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "123");
 
   }
 
@@ -180,33 +181,32 @@ public class AdjustIntegrationTest {
     AdjustEvent event = mock(AdjustEvent.class);
     PowerMockito.whenNew(AdjustEvent.class).withArguments("bar").thenReturn(event);
 
-    Traits traits = createTraits() //
-        .putValue("userId", "5678");
+    Traits traits = createTraits("123");
 
-    integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
     integration.track(new TrackPayloadBuilder()
         .event("foo")
+        .traits(traits)
         .build());
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("userId", "5678");
+    verify(adjustInstance).addSessionPartnerParameter("userId", "123");
 
   }
 
-  @Test public void trackWithBoth() throws Exception {
+  @Test public void trackWithUserIdAndAnonymousId() throws Exception {
     AdjustEvent event = mock(AdjustEvent.class);
     PowerMockito.whenNew(AdjustEvent.class).withArguments("bar").thenReturn(event);
 
-    Traits traits = createTraits() //
-        .putValue("anonymousId", "1234") //
-        .putValue("userId", "5678");
+    Traits traits = createTraits("123") //
+        .putValue("anonymousId", "789");
 
-    integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
     integration.track(new TrackPayloadBuilder()
         .event("foo")
+        .traits(traits)
         .build());
+
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("userId", "5678");
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "1234");
+    verify(adjustInstance).addSessionPartnerParameter("userId", "123");
+    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "789");
   }
 
   @Test public void trackWithoutMatchingCustomEventDoesNothing() throws Exception {

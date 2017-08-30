@@ -12,6 +12,7 @@ import com.adjust.sdk.OnAttributionChangedListener;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.segment.analytics.ValueMap;
+import com.segment.analytics.integrations.BasePayload;
 import com.segment.analytics.integrations.IdentifyPayload;
 import com.segment.analytics.integrations.Integration;
 import com.segment.analytics.integrations.Logger;
@@ -84,24 +85,27 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
     adjust.onCreate(adjustConfig);
   }
 
+  private void setPartnerParams(BasePayload payload) {
+    String userId = payload.userId();
+    if (!isNullOrEmpty(userId)) {
+      adjust.addSessionPartnerParameter("userId", userId);
+      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
+    }
+
+    String anonymousId = payload.anonymousId();
+    if (!isNullOrEmpty(anonymousId)) {
+      adjust.addSessionPartnerParameter("anonymousId", anonymousId);
+      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
+    }
+  }
+
   @Override public AdjustInstance getUnderlyingInstance() {
     return adjust;
   }
 
   @Override public void identify(IdentifyPayload identify) {
     super.identify(identify);
-
-    String userId = identify.userId();
-    if (!isNullOrEmpty(userId)) {
-      adjust.addSessionPartnerParameter("userId", userId);
-      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
-    }
-
-    String anonymousId = identify.anonymousId();
-    if (!isNullOrEmpty(anonymousId)) {
-      adjust.addSessionPartnerParameter("anonymousId", anonymousId);
-      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
-    }
+    setPartnerParams(identify);
   }
 
   @Override public void reset() {
@@ -112,18 +116,7 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
 
   @Override public void track(TrackPayload track) {
     super.track(track);
-
-    String userId = track.userId();
-    if (!isNullOrEmpty(userId)) {
-      adjust.addSessionPartnerParameter("userId", userId);
-      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
-    }
-
-    String anonymousId = track.anonymousId();
-    if (!isNullOrEmpty(anonymousId)) {
-      adjust.addSessionPartnerParameter("anonymousId", anonymousId);
-      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
-    }
+    setPartnerParams(track);
 
     String token = customEvents.getString(track.event());
     if (isNullOrEmpty(token)) {
