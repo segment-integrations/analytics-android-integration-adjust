@@ -121,7 +121,7 @@ public class AdjustIntegrationTest {
 
     integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
 
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "1234");
+    verify(adjustInstance).addSessionPartnerParameter("anonymous_id", "1234");
   }
 
   @Test public void identifyWithUserId() {
@@ -131,7 +131,7 @@ public class AdjustIntegrationTest {
 
     integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
 
-    verify(adjustInstance).addSessionPartnerParameter("userId", "34235");
+    verify(adjustInstance).addSessionPartnerParameter("user_id", "34235");
   }
 
   @Test public void identifyWithBoth() {
@@ -142,8 +142,8 @@ public class AdjustIntegrationTest {
 
     integration.identify(new IdentifyPayloadBuilder().traits(traits).build());
 
-    verify(adjustInstance).addSessionPartnerParameter("userId", "34235");
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "123");
+    verify(adjustInstance).addSessionPartnerParameter("user_id", "34235");
+    verify(adjustInstance).addSessionPartnerParameter("anonymous_id", "123");
 
   }
 
@@ -173,7 +173,7 @@ public class AdjustIntegrationTest {
         .build());
 
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "123");
+    verify(adjustInstance).addSessionPartnerParameter("anonymous_id", "123");
 
   }
 
@@ -188,7 +188,7 @@ public class AdjustIntegrationTest {
         .traits(traits)
         .build());
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("userId", "123");
+    verify(adjustInstance).addSessionPartnerParameter("user_id", "123");
 
   }
 
@@ -205,8 +205,8 @@ public class AdjustIntegrationTest {
         .build());
 
     verify(adjustInstance).trackEvent(event);
-    verify(adjustInstance).addSessionPartnerParameter("userId", "123");
-    verify(adjustInstance).addSessionPartnerParameter("anonymousId", "789");
+    verify(adjustInstance).addSessionPartnerParameter("user_id", "123");
+    verify(adjustInstance).addSessionPartnerParameter("anonymous_id", "789");
   }
 
   @Test public void trackWithoutMatchingCustomEventDoesNothing() throws Exception {

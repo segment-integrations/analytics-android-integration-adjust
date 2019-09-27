@@ -88,14 +88,14 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
   private void setPartnerParams(BasePayload payload) {
     String userId = payload.userId();
     if (!isNullOrEmpty(userId)) {
-      adjust.addSessionPartnerParameter("userId", userId);
-      logger.verbose("adjust.addSessionPartnerParameter(userId, %s)", userId);
+      adjust.addSessionPartnerParameter("user_id", userId);
+      logger.verbose("adjust.addSessionPartnerParameter(user_id, %s)", userId);
     }
 
     String anonymousId = payload.anonymousId();
     if (!isNullOrEmpty(anonymousId)) {
-      adjust.addSessionPartnerParameter("anonymousId", anonymousId);
-      logger.verbose("adjust.addSessionPartnerParameter(anonymousId, %s)", anonymousId);
+      adjust.addSessionPartnerParameter("anonymous_id", anonymousId);
+      logger.verbose("adjust.addSessionPartnerParameter(anonymous_id, %s)", anonymousId);
     }
   }
 
