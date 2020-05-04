@@ -83,6 +83,7 @@ public class AdjustIntegration extends Integration<AdjustInstance> {
         break;
     }
     adjust.onCreate(adjustConfig);
+    adjust.onResume();
   }
 
   private void setPartnerParams(BasePayload payload) {
