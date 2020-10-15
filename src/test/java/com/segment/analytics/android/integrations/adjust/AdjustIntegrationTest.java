@@ -35,6 +35,7 @@ import static com.segment.analytics.Analytics.LogLevel.VERBOSE;
 import static com.segment.analytics.Utils.createTraits;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -77,6 +78,8 @@ public class AdjustIntegrationTest {
         .putValue("appToken", "foo") //
         .putValue("setEventBufferingEnabled", true) //
         .putValue("setEnvironmentProduction", true) //
+        .putValue("setDelay", true) //
+        .putValue("delayTime", 1.0) //
         .putValue("trackAttributionData", true);
 
     PowerMockito.whenNew(AdjustConfig.class)
@@ -86,6 +89,7 @@ public class AdjustIntegrationTest {
     AdjustIntegration.FACTORY.create(settings, analytics);
 
     verify(config).setEventBufferingEnabled(true);
+    verify(config).setDelayStart(1.0);
     verify(config).setLogLevel(LogLevel.VERBOSE);
     verify(config) //
         .setOnAttributionChangedListener(isA(SegmentAttributionChangedListener.class));
@@ -107,6 +111,7 @@ public class AdjustIntegrationTest {
     AdjustIntegration.FACTORY.create(settings, analytics);
 
     verify(config, never()).setEventBufferingEnabled(anyBoolean());
+    verify(config, never()).setDelayStart(anyDouble());
     verify(config, never()).setLogLevel(any(LogLevel.class));
     verify(config, never()) //
         .setOnAttributionChangedListener(any(OnAttributionChangedListener.class));
