@@ -47,9 +47,9 @@ dependencies {
     google()
   }
 
-  compileOnly 'com.segment.analytics.android:analytics:4.1.5'
+  compileOnly 'com.segment.analytics.android:analytics:4.10.0'
 
-  api 'com.adjust.sdk:adjust-android:4.22.0'
+  api 'com.adjust.sdk:adjust-android:4.29.1'
 
   testImplementation 'junit:junit:4.12'
   testImplementation('org.robolectric:robolectric:3.3.2') {
