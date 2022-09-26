@@ -47,7 +47,7 @@ dependencies {
     google()
   }
 
-  compileOnly 'com.segment.analytics.android:analytics:4.10.0'
+  compileOnly 'com.segment.analytics.android:analytics:4.10.4'
 
   api 'com.adjust.sdk:adjust-android:4.29.1'
 
