@@ -30,6 +30,7 @@ import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+
 import static com.segment.analytics.Analytics.LogLevel.NONE;
 import static com.segment.analytics.Analytics.LogLevel.VERBOSE;
 import static com.segment.analytics.Utils.createTraits;
@@ -43,9 +44,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 18, manifest = Config.NONE)
+@Config(sdk = 29, manifest = Config.NONE)
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
-@PrepareForTest({ Adjust.class, AdjustConfig.class, AdjustEvent.class, AdjustIntegration.class }) //
+@PrepareForTest({ Adjust.class, AdjustConfig.class, AdjustIntegration.class }) //
 public class AdjustIntegrationTest {
   @Rule public PowerMockRule rule = new PowerMockRule();
   @Mock Application application;
