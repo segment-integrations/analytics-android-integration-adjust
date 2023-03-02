@@ -1,5 +1,10 @@
 # CHANGELOG
 
+Version 0.3.6 (2nd March, 2023)
+================================
+*(Supports Adjust 4.33.3)*
+* [Improvement](https://github.com/segment-integrations/analytics-android-integration-adjust/pull/22): Upgrade Adjust SDK version to 4.33.3.
+
 Version 0.3.5 (7th March, 2022)
 ================================
 *(Supports Adjust 4.29.1)*
